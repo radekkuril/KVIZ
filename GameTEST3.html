@@ -66,7 +66,7 @@
 </xml><![endif]-->
 </head>
 <body>
-  <h1>Automobilový kvíz</h1>
+  <h1>Automobilový kvíz <span id='namePar'></p></h1>
   <button id="start-btn" class="btn">Začít kvíz</button>
   <div id="timer"></div>
   <div id="quiz-container"></div>
@@ -434,7 +434,15 @@
 
     function showResult() {
       container.innerHTML = '<h2>Gratulujeme! Dokončili jste kvíz!</h2>';
+      window.location.assign("https://apps.powerapps.com/play/e/b756c805-343b-401f-949b-1e2a061cfdb7/a/27f894a9-b173-41f0-8635-134e2f662331?tenantId=2882be50-2012-4d88-ac86-544124e120c8&hint=1d1b7cd9-fb2e-4a2c-a4a7-c6034324bd7a&sourcetime=1746183666343?mail=" + mail + "&kviz=" + kviz + "&errors=" + errors + "&seconds=" + seconds);
     }
+    
+    const params = new URLSearchParams(window.location.search);
+    const jmeno = params.get("xname"); // "Tom"
+    const kviz = params.get("xkviz");       // "123"
+    const mail = params.get("xmail"); //
+    const namePar = document.getElementById('namePar');
+    namePar.textContent = jmeno;  
   </script>
 </body>
 </html>
