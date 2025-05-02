@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+  <meta charset="UTF-8">
+  <title>Automobilový kvíz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #quiz-container { display: none; }
+    .question-block { display: block; margin-top: 20px; }
+    .imageBox {width: 100px;height:50px;overflow:hidden;display:inline-block;}
+    .optionsBox{display:block;border:1px solid black;}
+    .question { margin-bottom: 10px; }
+    .hidden { display: none; }
+    .btn { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    .drag-block{
+      width: 200px;
+      height: 50px;
+      user-select: none;
+      border: 2px solid #aaa;
+      display: inline-block;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .drop-zone {
+      width: 300px;
+      height: 70px;
+      user-select: none;
+      border: 2px dashed #aaa;
+      display: inline-block;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .puzzle{
+        width: 115px;
+        height: 60px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 100'><path  d='M0,0 h270 v25 A10,10 0 0,1 270,75 v25 h-270 v-25 M 0,25 A10,10 0 0,1 0,75 M 0,25 v-25z' stroke='red' fill='green'/></svg>");
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 120'><rect x='0' y='0' width='200' height='120' fill='%23e0e0e0'/><path d='M0,30 A10,10 0 1,1 0,90' fill='white'/><path d='M200,30 A10,10 0 1,1 200,90' fill='%23e0e0e0'/> stroke='red' fill='green'/></svg>");
+        background-size: cover;
+        background-repeat: no-repeat;
+        border: 0px solid #999;
+        box-sizing: border-box;
+        vertical-align: middle;
+        text-align: center;
+        line-height:100%;
+        display: table-cell;
+    }
+
+    #timer { font-weight: bold; margin-bottom: 10px; }
+  </style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:i0f84bba906045b4af568ee102a52dcb msdt:dt="string">0.1 Initial category|0239cc7a-0c96-48a8-9e0e-a383e362571c</mso:i0f84bba906045b4af568ee102a52dcb>
+<mso:TaxCatchAll msdt:dt="string">1;#0.1 Initial category|0239cc7a-0c96-48a8-9e0e-a383e362571c</mso:TaxCatchAll>
+<mso:RevIMComments msdt:dt="string"></mso:RevIMComments>
+<mso:RevIMExtends msdt:dt="string">{&quot;Locked&quot;:null,&quot;LockedBy&quot;:null,&quot;UnLocked&quot;:null,&quot;UnLockedBy&quot;:null,&quot;Classified&quot;:&quot;2025-05-02T07:01:49.882Z&quot;,&quot;KSUClass&quot;:&quot;0239cc7a-0c96-48a8-9e0e-a383e362571c&quot;,&quot;Reclassified&quot;:null,&quot;ReclassifiedBy&quot;:null,&quot;EDReclassified&quot;:null,&quot;EDReclassifiedBy&quot;:null,&quot;EventCreated&quot;:null,&quot;EventModified&quot;:null,&quot;EventDeleted&quot;:null,&quot;EventCreatedBy&quot;:null,&quot;EventModifiedBy&quot;:null,&quot;EventDeletedBy&quot;:null,&quot;Moved&quot;:null,&quot;MovedBy&quot;:null,&quot;MovedFrom&quot;:null}</mso:RevIMExtends>
+<mso:MediaServiceImageTags msdt:dt="string"></mso:MediaServiceImageTags>
+<mso:LegalHoldTag msdt:dt="string"></mso:LegalHoldTag>
+<mso:RevIMDeletionDate msdt:dt="string">2027-05-02T09:01:27Z</mso:RevIMDeletionDate>
+<mso:lcf76f155ced4ddcb4097134ff3c332f msdt:dt="string"></mso:lcf76f155ced4ddcb4097134ff3c332f>
+<mso:i1d9ae142cc947019f527038ec60c48b msdt:dt="string"></mso:i1d9ae142cc947019f527038ec60c48b>
+<mso:RevIMBCS msdt:dt="string">1;#0.1 Initial category|0239cc7a-0c96-48a8-9e0e-a383e362571c</mso:RevIMBCS>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+  <h1>Automobilový kvíz</h1>
+  <button id="start-btn" class="btn">Začít kvíz</button>
+  <div id="timer"></div>
+  <div id="quiz-container"></div>
+
+  <script>
+    const quizData = [
+        {
+            title: "Seřaď IT komponenty pro čtení dat ze strojů:",
+            type:"puzzle",
+            components : ["Databáze","Kepware","IT PEP","PSB","PLC","DAP","USB","POD"],
+            answer: [4,2,3,0]
+        },
+      {
+        title: "Digitální systémy v automobilu",
+        questions: [
+          {
+            "question": "Co znamená zkratka ECU v automobilové elektronice?",
+            "options": ["Electronic Control Unit", "Engine Calibration Unit", "Electric Communication Utility", "Engine Control Upgrade"],
+            "answer": 0
+          },
+          {
+            "question": "Jaký je hlavní účel systému ADAS?",
+            "options": ["Zlepšení pohodlí cestujících", "Navigace vozidla", "Podpora řidiče a zvýšení bezpečnosti", "Optimalizace spotřeby paliva"],
+            "answer": 2
+          },
+          {
+            "question": "Který systém zajišťuje automatické nouzové brzdění?",
+            "options": ["ABS", "ESP", "AEB", "TPMS"],
+            "answer": 2
+          }/*,
+          {
+            "question": "K čemu slouží CAN sběrnice v automobilu?",
+            "options": ["K nabíjení baterie", "K řízení klimatizace", "K měření emisí", "Ke komunikaci mezi řídicími jednotkami"],
+            "answer": 3
+          },
+          {
+            "question": "Jaký je význam systému OBD-II?",
+            "options": ["Zajištění bezpečnostních pásů", "Sledování emisí a diagnostika poruch", "Předpověď počasí", "Navigace ve městech"],
+            "answer": 1
+          },
+          {
+            "question": "Který senzor se používá pro rozpoznání mrtvého úhlu?",
+            "options": ["Gyroskop", "Ultrazvukový senzor", "Radarový senzor", "Kamera pro noční vidění"],
+            "answer": 2
+          },
+          {
+            "question": "Jaký typ zobrazení využívá Head-Up Display (HUD)?",
+            "options": ["Projekci informací na čelní sklo", "3D hologram", "Navigaci přes tablet", "Infračervený displej na volantu"],
+            "answer": 0
+          },
+          {
+            "question": "K čemu slouží systém TPMS?",
+            "options": ["Detekce nehod", "Kontrola tlaku v pneumatikách", "Měření teploty motoru", "Řízení podvozku"],
+            "answer": 1
+          },
+          {
+            "question": "Jaký účel má infotainment systém v moderním voze?",
+            "options": ["Řízení motoru", "Zajištění bezpečnostních funkcí", "Diagnostika podvozku", "Zábava a informace pro řidiče a pasažéry"],
+            "answer": 3
+          },
+          {
+            "question": "Co umožňuje funkce OTA (Over-the-Air) v digitálních systémech auta?",
+            "options": ["Automatické otevírání dveří", "Výměnu fyzických komponentů", "Bezdrátovou aktualizaci softwaru", "Zvýšení výkonu motoru"],
+            "answer": 2
+          }*/
+        ]
+      },
+      {
+        title: "Poznejte značku z neúplného loga",
+        type: "match",
+        pairs: {
+          "./img/Volkswagen.png": "Volkswagen",
+          "./img/Mercedes.png": "Mercedes",
+          "./img/Audi.png": "Audi",
+          "./img/Toyota.jpg": "Toyota"
+        },
+        options:["Audi","BMW","Citroen","Datsun","Fiat","Honda","Kia","Mercedes","Peugeot","Porsche","Toyota","Volkswagen"]
+      },
+      {
+        title: "Přiřazení čísel typů aut k automobilovým značkám",
+        type: "match",
+        pairs: {
+          "5008": "Peugeot",
+          "911": "Porsche",
+          "124": "Fiat",
+          "320": "BMW"
+        },
+        options:["Audi","BMW","Citroen","Datsun","Fiat","Honda","Kia","Mercedes","Peugeot","Porsche","Toyota","Volkswagen"]
+      },
+      {
+        title: "Elektromobily",
+        questions: [
+          {
+            question: "Která značka vyrábí model EX30?",
+            options: ["Volvo", "Toyota", "Nissan", "Ford"],
+            answer: 0
+          },
+          {
+            question: "Co znamená WLTP?",
+            options: ["Typ akumulátoru", "Způsob měření dojezdu", "Značka elektromobilu", "Systém klimatizace"],
+            answer: 1
+          }
+        ]
+      },
+      {
+        title: "Historie automobilismu",
+        questions: [
+           {
+            "question": "Kdy byla založena společnost první společnost předcházející automobilce Škoda Auto?",
+            "options": ["1895", "1905", "1925", "1935"],
+            "answer": 0
+          },
+          {
+            "question": "Kdo byli zakladatelé původní firmy Laurin & Klement?",
+            "options": ["Emil Škoda a Jan Perner", "Ferdinand Porsche a Jan Kašpar", "Václav Laurin a Václav Klement", "Karel Loprais a Václav Klement"],
+            "answer": 2
+          },
+          {
+            "question": "Jaký byl první automobil značky Laurin & Klement?",
+            "options": ["Voiturette A", "Škoda Popular", "Felicia", "Octavia"],
+            "answer": 0
+          },
+          {
+            "question": "V kterém roce došlo ke spojení Laurin & Klement se Škodovkou?",
+            "options": ["1918", "1925", "1930", "1945"],
+            "answer": 1
+          },
+          {
+            "question": "Který model Škody byl ikonou 60. let 20. století?",
+            "options": ["Škoda Favorit", "Škoda 1000 MB", "Škoda Rapid", "Škoda Superb"],
+            "answer": 1
+          },
+          {
+            "question": "Kdy byl uveden na trh model Škoda Favorit?",
+            "options": ["1983", "1987", "1991", "1995"],
+            "answer": 1
+          },
+          {
+            "question": "Kdy se Škoda Auto stala součástí koncernu Volkswagen?",
+            "options": ["1991", "1995", "1998", "2001"],
+            "answer": 0
+          },
+          {
+            "question": "Který model zahájil moderní éru značky po vstupu do VW Group?",
+            "options": ["Octavia", "Felicia", "Fabia", "Superb"],
+            "answer": 1
+          },
+          {
+            "question": "Jaký název nesl první elektromobil značky Škoda vyráběný sériově?",
+            "options": ["Škoda E-Citigo", "Škoda Eltra", "Škoda Enyaq iV", "Škoda Octavia Green"],
+            "answer": 0
+          },
+          {
+            "question": "Kde sídlí hlavní závod Škoda Auto?",
+            "options": ["Praha", "Brno", "Mladá Boleslav", "Plzeň"],
+            "answer": 2
+          }
+        ]
+      }
+    ];
+
+    let currentRound = 0;
+    let startTime;
+    const container = document.getElementById('quiz-container');
+    const timerEl = document.getElementById('timer');
+    var round,errors=0;
+
+    document.getElementById('start-btn').onclick = () => {
+      document.getElementById('start-btn').style.display = 'none';
+      container.style.display = 'block';
+      startTime = new Date();
+      updateTimer();
+      startRound();
+    };
+
+    function updateTimer() {
+      const now = new Date();
+      const seconds = Math.floor((now - startTime) / 1000);
+      timerEl.textContent = `Čas: ${seconds} sekund, počet chyb: ${errors}`;
+      requestAnimationFrame(updateTimer);
+    }
+
+    function startRound() {
+      container.innerHTML = '';
+      round = quizData[currentRound];
+      const title = document.createElement('h2');
+      title.textContent = round.title;
+      container.appendChild(title);
+
+      if (round.questions) {
+        round.questions.forEach((q, index) => {
+          const block = document.createElement('div');
+          block.className = 'question-block';
+          
+          const question = document.createElement('div');
+          question.className = 'question';
+          question.textContent = q.question;
+          block.appendChild(question);
+
+          q.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = "btn" + ((i === q.answer) ? " rightAnswer" : "");
+            btn.textContent = opt;
+            btn.onclick = () => {
+              if (i === q.answer) {
+                btn.style.backgroundColor = 'lightgreen';
+                btn.disabled = true;
+                if (checkAllCorrect(container)){
+                    nextRound();
+                } 
+              } else {
+                btn.style.backgroundColor = 'red';
+                errors++;
+              }
+            };
+            block.appendChild(btn);
+          });
+          container.appendChild(block);
+        });
+      } else if (round.type === 'match') {
+        const entries = Object.entries(round.pairs);
+        var div1;
+        entries.forEach(([key, val]) => {
+          const div = document.createElement('div');
+          div.className = 'question-block';
+          if(key.substring(1,5) === "/img"){
+            div1 = document.createElement('div');
+            div1.className = "imageBox";
+            const img = document.createElement('img');
+            img.src=key;
+            div1.appendChild(img);
+            div.appendChild(div1);
+          }
+          else{
+            div.textContent = `Co odpovídá: ${key}?`;
+          }
+          const input = document.createElement('div');
+          input.className = 'drop-zone';
+          input.dataset.correct = val.toLowerCase();
+          input.imgBox = div1;
+          input.addEventListener("dragover", handleDragOver);
+          input.addEventListener("dragleave", handleDragLeave);
+          input.addEventListener("drop", handleDrop);
+          /*
+          input.oninput = () => {
+            if (input.value.toLowerCase() === input.dataset.correct) {
+              input.style.backgroundColor = 'lightgreen';
+              if(input.imgBox){
+                input.imgBox.style.width="200px";
+                input.imgBox.style.height="200px";
+              }
+              input.disabled = true;
+              if (checkAllCorrect(container)) {
+               nextRound();
+               }
+            } else {
+              input.style.backgroundColor = '';
+            }
+          };
+          */
+          div.appendChild(input);
+          container.appendChild(div);
+        });
+        if (round.options) {
+            const options = Object.entries(round.options);
+            const optionsBox = document.createElement('div');
+            optionsBox.className='optionsBox';
+            options.forEach((opt, i) => {
+              const div2 = document.createElement('div');
+              div2.className = 'drag-block';
+              div2.textContent = opt[1];
+              div2.setAttribute("draggable", "true");
+              div2.addEventListener("dragstart", (event) => {
+                event.dataTransfer.setData("text/plain", div2.textContent); // nebo jiný identifikátor
+              });
+              optionsBox.appendChild(div2);
+            });
+            container.appendChild(optionsBox);
+        }
+      }
+      else if (round.type === 'puzzle') {
+        const components = Object.entries(round.components);
+        const componentsBox = document.createElement('div');
+        componentsBox.className='componentsBox';
+        components.forEach((opt, i) => {
+          const div2 = document.createElement('div');
+          div2.className = 'puzzle';
+          div2.textContent = opt[1];
+          div2.setAttribute("draggable", "true");
+          div2.addEventListener("dragstart", (event) => {
+            event.dataTransfer.setData("text/plain", opt[0]); // nebo jiný identifikátor
+          });
+          componentsBox.appendChild(div2);
+        });
+        container.appendChild(componentsBox);
+        const targetBox = document.createElement('div');
+        targetBox.className='targetBox';
+        container.appendChild(targetBox);
+      }
+    }
+    
+    function handleDragLeave(event){
+      const input = event.currentTarget;
+      input.style.backgroundColor = "";
+    }
+    function handleDragOver(event){
+      const input = event.currentTarget;
+      event.preventDefault(); // Nutné pro umožnění dropu
+      input.style.backgroundColor = "yellow";
+    }  
+    function handleDrop(event){
+            const input = event.currentTarget;
+            event.preventDefault();
+            input.style.backgroundColor = "";
+          
+            const data = event.dataTransfer.getData("text/plain"); // očekáváme text nebo ID
+          
+            // Pokusíme se najít prvek podle ID a vložit ho do divu
+            const draggedElement = document.getElementById(data);
+            if (draggedElement) {
+              input.appendChild(draggedElement);
+            } else {
+              input.textContent = data; // fallback, pokud je to jen text
+            }
+            if (input.textContent.toLowerCase() === input.dataset.correct) {
+              input.style.backgroundColor = 'lightgreen';
+              if(input.imgBox){
+                input.imgBox.style.width="200px";
+                input.imgBox.style.height="200px";
+              }
+              input.disabled = true;
+              input.removeEventListener("drop",handleDrop);
+              input.removeEventListener("dragover", handleDragOver);
+              input.removeEventListener("dragleave", handleDragLeave);
+              if (checkAllCorrect(container)) {
+               nextRound();
+               }
+            } else {
+              input.style.backgroundColor = 'red';
+              errors++;
+            }
+          }
+
+    function checkAllCorrect(container) {
+      const inputs = container.querySelectorAll('input');
+      const buttons = container.getElementsByClassName('rightAnswer');
+      const zones = container.getElementsByClassName('drop-zone');
+      return ( (round.type === 'match')?
+                (([...inputs].length>0) ? 
+                    [...inputs].every(input => input.disabled):
+                     [...zones].every(input => input.disabled)
+                ):
+                [...buttons].every(btn => btn.style.backgroundColor === 'lightgreen')
+            );
+    }
+
+    function nextRound() {
+      currentRound++;
+      if (currentRound < quizData.length) {
+        setTimeout(startRound, 1000);
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      container.innerHTML = '<h2>Gratulujeme! Dokončili jste kvíz!</h2>';
+    }
+  </script>
+</body>
+</html>

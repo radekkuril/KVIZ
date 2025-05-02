@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+  <meta charset="UTF-8">
+  <title>Drag and Drop Puzzle</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      width: 600px;
+      margin: 20px auto;
+      gap: 10px;
+    }
+
+    .puzzle-piece, .drop-zone {
+      width: 70px;
+      height: 70px;
+      user-select: none;
+    }
+
+    .puzzle-piece {
+      cursor: grab;
+    }
+
+    .drop-zone {
+      border: 2px dashed #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:i0f84bba906045b4af568ee102a52dcb msdt:dt="string">0.1 Initial category|0239cc7a-0c96-48a8-9e0e-a383e362571c</mso:i0f84bba906045b4af568ee102a52dcb>
+<mso:TaxCatchAll msdt:dt="string">1;#0.1 Initial category|0239cc7a-0c96-48a8-9e0e-a383e362571c</mso:TaxCatchAll>
+<mso:RevIMComments msdt:dt="string"></mso:RevIMComments>
+<mso:RevIMExtends msdt:dt="string">{&quot;Locked&quot;:null,&quot;LockedBy&quot;:null,&quot;UnLocked&quot;:null,&quot;UnLockedBy&quot;:null,&quot;Classified&quot;:&quot;2025-05-02T07:01:49.887Z&quot;,&quot;KSUClass&quot;:&quot;0239cc7a-0c96-48a8-9e0e-a383e362571c&quot;,&quot;Reclassified&quot;:null,&quot;ReclassifiedBy&quot;:null,&quot;EDReclassified&quot;:null,&quot;EDReclassifiedBy&quot;:null,&quot;EventCreated&quot;:null,&quot;EventModified&quot;:null,&quot;EventDeleted&quot;:null,&quot;EventCreatedBy&quot;:null,&quot;EventModifiedBy&quot;:null,&quot;EventDeletedBy&quot;:null,&quot;Moved&quot;:null,&quot;MovedBy&quot;:null,&quot;MovedFrom&quot;:null}</mso:RevIMExtends>
+<mso:MediaServiceImageTags msdt:dt="string"></mso:MediaServiceImageTags>
+<mso:LegalHoldTag msdt:dt="string"></mso:LegalHoldTag>
+<mso:RevIMDeletionDate msdt:dt="string">2027-05-02T09:01:27Z</mso:RevIMDeletionDate>
+<mso:lcf76f155ced4ddcb4097134ff3c332f msdt:dt="string"></mso:lcf76f155ced4ddcb4097134ff3c332f>
+<mso:i1d9ae142cc947019f527038ec60c48b msdt:dt="string"></mso:i1d9ae142cc947019f527038ec60c48b>
+<mso:RevIMBCS msdt:dt="string">1;#0.1 Initial category|0239cc7a-0c96-48a8-9e0e-a383e362571c</mso:RevIMBCS>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+
+<h2>Puzzle - Přetahování</h2>
+
+<div class="container" id="pieces">
+  <!-- Puzzle pieces -->
+  <!-- Každý dílek má data-id pro kontrolu -->
+  <svg class="puzzle-piece" id="piece1" data-id="1" draggable="true" fill="#ff6666" viewBox="0 0 100 100">
+    <path d="M0,0 H80 V80 H0 Z" />
+  </svg>
+  <svg class="puzzle-piece" id="piece2" data-id="2" draggable="true" fill="#ffcc66" viewBox="0 0 100 100">
+    <path d="M0,0 H80 V80 H0 Z" />
+  </svg>
+  <svg class="puzzle-piece" id="piece3" data-id="3" draggable="true" fill="#ffff66" viewBox="0 0 100 100">
+    <path d="M0,0 H80 V80 H0 Z" />
+  </svg>
+  <svg class="puzzle-piece" id="piece4" data-id="4" draggable="true" fill="#66ff66" viewBox="0 0 100 100">
+    <path d="M0,0 H80 V80 H0 Z" />
+  </svg>
+  <svg class="puzzle-piece" id="piece5" data-id="5" draggable="true" fill="#66ffff" viewBox="0 0 100 100">
+    <path d="M0,0 H80 V80 H0 Z" />
+  </svg>
+  <svg class="puzzle-piece" id="piece6" data-id="6" draggable="true" fill="#6699ff" viewBox="0 0 100 100">
+    <path d="M0,0 H80 V80 H0 Z" />
+  </svg>
+  <svg class="puzzle-piece" id="piece7" data-id="7" draggable="true" fill="#cc66ff" viewBox="0 0 100 100">
+    <path d="M0,0 H80 V80 H0 Z" />
+  </svg>
+  <svg class="puzzle-piece" id="piece8" data-id="8" draggable="true" fill="#ff66cc" viewBox="0 0 100 100">
+    <path d="M0,0 H80 V80 H0 Z" />
+  </svg>
+<svg id="puzzle1" viewBox="0 0 100 300" width="300px" height="100px">
+  <path  d="M0,0 h270 v25 A10,10 0 0,1 270,75 v25 h-270 v-25 M 0,25 A10,10 0 0,1 0,75 M 0,25 v-25" style="stroke: #0000ff; stroke-width:1; fill:blue;"/>
+</svg>
+
+<svg id="puzzle2" viewBox="0 0 100 300" width="300px" height="100px">
+  <path d="M0,0 h270 v25 A10,10 0 0,1 270,75 v25 h-270 v-25 M 0,25 A10,10 0 0,1 0,75 M 0,25 v-25" style="stroke: #00ff00; stroke-width:1; fill:none;"/>
+</svg>
+
+<svg id="puzzle3" viewBox="0 0 100 100" width="100" height="100">
+  <path fill="#6f6" d="M0,0 h70 a10,10 0 1,1 0,20 h-10 v10 h10 a10,10 0 1,1 0,20 h-10 v10 h10 a10,10 0 1,1 0,20 h-70 z" transform="rotate(90,50,50)"/>
+</svg>
+
+<svg id="puzzle4" viewBox="0 0 100 100" width="100" height="100">
+  <path fill="#66f" d="M0,0 h70 v70 h-70 a10,10 0 1,1 0,-20 h10 v-10 h-10 a10,10 0 1,1 0,-20 h10 v-10 h-10 a10,10 0 1,1 0,20 h-70 z" transform="rotate(90,50,50)"/>
+</svg>
+</div>
+
+<div class="container" id="targets">
+  <!-- Drop zones -->
+  <div class="drop-zone" data-id="1"></div>
+  <div class="drop-zone" data-id="2"></div>
+  <div class="drop-zone" data-id="3"></div>
+  <div class="drop-zone" data-id="4"></div>
+  <div class="drop-zone" data-id="5"></div>
+  <div class="drop-zone" data-id="6"></div>
+  <div class="drop-zone" data-id="7"></div>
+  <div class="drop-zone" data-id="8"></div>
+</div>
+
+<div id="message"></div>
+
+<script>
+  const pieces = document.querySelectorAll('.puzzle-piece');
+  const zones = document.querySelectorAll('.drop-zone');
+  const message = document.getElementById('message');
+
+  pieces.forEach(piece => {
+    piece.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', piece.id);
+    });
+  });
+
+  zones.forEach(zone => {
+    zone.addEventListener('dragover', e => {
+      e.preventDefault();
+      zone.style.backgroundColor = '#eee';
+    });
+
+    zone.addEventListener('dragleave', () => {
+      zone.style.backgroundColor = '';
+    });
+
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      const pieceId = e.dataTransfer.getData('text/plain');
+      const piece = document.getElementById(pieceId);
+      if (zone.children.length === 0) {
+        zone.appendChild(piece);
+        zone.style.backgroundColor = '';
+        checkIfComplete();
+      }
+    });
+  });
+
+  function checkIfComplete() {
+    let correct = 0;
+    zones.forEach(zone => {
+      const child = zone.firstElementChild;
+      if (child && child.dataset.id === zone.dataset.id) {
+        correct++;
+      }
+    });
+
+    if (document.querySelectorAll('.drop-zone svg').length === 8) {
+      if (correct === 8) {
+        message.textContent = '✅ Všechny dílky jsou správně!';
+        message.style.color = 'green';
+      } else {
+        message.textContent = '❌ Některé dílky nejsou na správném místě.';
+        message.style.color = 'red';
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
+
+
+
