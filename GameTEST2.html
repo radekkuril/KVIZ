@@ -198,7 +198,7 @@
     let startTime;
     const container = document.getElementById('quiz-container');
     const timerEl = document.getElementById('timer');
-    var round;
+    var round,seconds;
 
     document.getElementById('start-btn').onclick = () => {
       document.getElementById('start-btn').style.display = 'none';
@@ -210,7 +210,7 @@
 
     function updateTimer() {
       const now = new Date();
-      const seconds = Math.floor((now - startTime) / 1000);
+      seconds = Math.floor((now - startTime) / 1000);
       timerEl.textContent = `Čas: ${seconds} sekund`;
       requestAnimationFrame(updateTimer);
     }
@@ -338,6 +338,7 @@
 
     function showResult() {
       container.innerHTML = '<h2>Gratulujeme! Dokončili jste kvíz!</h2>';
+      document.location="https://apps.powerapps.com/play/e/b756c805-343b-401f-949b-1e2a061cfdb7/a/27f894a9-b173-41f0-8635-134e2f662331?tenantId=2882be50-2012-4d88-ac86-544124e120c8&hint=1d1b7cd9-fb2e-4a2c-a4a7-c6034324bd7a&sourcetime=1746183666343?mail=" + mail + "&kviz=" + kviz + "&errors=" + errors + "&seconds=" + seconds
     }
     
     const params = new URLSearchParams(window.location.search);
