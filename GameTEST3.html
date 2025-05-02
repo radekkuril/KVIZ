@@ -244,7 +244,7 @@
 
     function updateTimer() {
       const now = new Date();
-      const seconds = Math.floor((now - startTime) / 1000);
+      seconds = Math.floor((now - startTime) / 1000);
       timerEl.textContent = `Čas: ${seconds} sekund, počet chyb: ${errors}`;
       requestAnimationFrame(updateTimer);
     }
