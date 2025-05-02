@@ -183,7 +183,7 @@
             "question": "Kdo byli zakladatelé původní firmy Laurin & Klement?",
             "options": ["Emil Škoda a Jan Perner", "Ferdinand Porsche a Jan Kašpar", "Václav Laurin a Václav Klement", "Karel Loprais a Václav Klement"],
             "answer": 2
-          },
+          }/*,
           {
             "question": "Jaký byl první automobil značky Laurin & Klement?",
             "options": ["Voiturette A", "Škoda Popular", "Felicia", "Octavia"],
@@ -223,7 +223,7 @@
             "question": "Kde sídlí hlavní závod Škoda Auto?",
             "options": ["Praha", "Brno", "Mladá Boleslav", "Plzeň"],
             "answer": 2
-          }
+          }*/
         ]
       }
     ];
@@ -232,7 +232,7 @@
     let startTime;
     const container = document.getElementById('quiz-container');
     const timerEl = document.getElementById('timer');
-    var round,errors=0;
+    var round,errors=0,seconds;
 
     document.getElementById('start-btn').onclick = () => {
       document.getElementById('start-btn').style.display = 'none';
