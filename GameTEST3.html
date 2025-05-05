@@ -430,7 +430,7 @@
   
     function onTouchMove(e) {
         const touchMove = e.touches[0];
-        moveAt(touchMove.el,touchMove.pageX, touchMove.pageY);
+        moveAt(touchMove.target,touchMove.pageX, touchMove.pageY);
       }
 
       function onTouchEnd(e) {
