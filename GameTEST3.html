@@ -455,6 +455,9 @@
           }
         }
       }
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    document.addEventListener("touchend", onTouchEnd, { passive: false });
+
     }
       function checkAllCorrect(container) {
       const inputs = container.querySelectorAll('input');
@@ -489,8 +492,6 @@
     const mail = params.get("xmail"); //
     const namePar = document.getElementById('namePar');
     namePar.textContent = jmeno;
-    document.addEventListener("touchmove", onTouchMove, { passive: false });
-    document.addEventListener("touchend", onTouchEnd, { passive: false });
     
   </script>
 </body>
