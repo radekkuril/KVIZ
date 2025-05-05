@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automobilový Kvíz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 1rem;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .question {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .drag-container, .drop-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    .drag-block, .drop-zone {
+      width: 120px;
+      height: 120px;
+      margin: 10px;
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      user-select: none;
+      touch-action: none;
+    }
+
+    .drag-block {
+      background: #d0f0ff;
+      cursor: grab;
+    }
+
+    .dragging {
+      opacity: 0.7;
+      position: absolute !important;
+      z-index: 1000;
+    }
+
+    .drop-zone {
+      background: #f0f0f0;
+      border: 2px dashed #aaa;
+    }
+
+    .btn {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .drag-block, .drop-zone {
+        width: 100px;
+        height: 100px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="quiz-container">
+    <div class="question">Co znamená tato značka?</div>
+    <div class="drag-container" id="drag-container"></div>
+    <div class="drop-container" id="drop-container"></div>
+    <button class="btn" id="next-button" style="display:none;">Další otázka</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        text: "Co znamená tato značka?",
+        image: "🚫", // zde může být i obrázek nebo emoji
+        options: ["Zákaz vjezdu", "Hlavní silnice", "Stůj, dej přednost", "Přednost zprava"],
+        answer: "zákaz vjezdu"
+      },
+      {
+        text: "Co znamená tato značka?",
+        image: "🛑",
+        options: ["Stop", "Přikázaný směr", "Zákaz vjezdu", "Konec zákazu"],
+        answer: "stop"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let errors = 0;
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      const container = document.getElementById('quiz-container');
+      container.querySelector(".question").textContent = question.text;
+
+      const dragContainer = document.getElementById('drag-container');
+      const dropContainer = document.getElementById('drop-container');
+      dragContainer.innerHTML = '';
+      dropContainer.innerHTML = '';
+
+      // create drop zone with image/emoji
+      const dropZone = document.createElement("div");
+      dropZone.className = "drop-zone";
+      dropZone.dataset.correct = question.answer.toLowerCase();
+      dropZone.textContent = question.image;
+      dropContainer.appendChild(dropZone);
+
+      // create draggable options
+      question.options.forEach(opt => {
+        const div = document.createElement("div");
+        div.className = "drag-block";
+        div.textContent = opt;
+        dragContainer.appendChild(div);
+        enableTouchDrag(div, dropZone);
+      });
+
+      document.getElementById("next-button").style.display = "none";
+    }
+
+    function enableTouchDrag(el, dropZone) {
+      el.addEventListener("touchstart", function (e) {
+        const touch = e.touches[0];
+        const rect = el.getBoundingClientRect();
+        el.dataset.offsetX = touch.clientX - rect.left;
+        el.dataset.offsetY = touch.clientY - rect.top;
+
+        el.style.position = 'absolute';
+        el.style.zIndex = 1000;
+        el.classList.add("dragging");
+
+        function moveAt(x, y) {
+          el.style.left = (x - el.dataset.offsetX) + 'px';
+          el.style.top = (y - el.dataset.offsetY) + 'px';
+        }
+
+        function onTouchMove(e) {
+          const touchMove = e.touches[0];
+          moveAt(touchMove.pageX, touchMove.pageY);
+        }
+
+        function onTouchEnd(e) {
+          el.classList.remove("dragging");
+          el.style.position = '';
+          el.style.left = '';
+          el.style.top = '';
+          el.style.zIndex = '';
+
+          const touchEnd = e.changedTouches[0];
+          const target = document.elementFromPoint(touchEnd.clientX, touchEnd.clientY);
+
+          if (target && target.classList.contains("drop-zone")) {
+            target.innerHTML = '';
+            target.appendChild(el);
+            if (el.textContent.toLowerCase() === target.dataset.correct) {
+              target.style.backgroundColor = "lightgreen";
+              document.getElementById("next-button").style.display = "block";
+            } else {
+              target.style.backgroundColor = "red";
+              errors++;
+            }
+          }
+
+          document.removeEventListener("touchmove", onTouchMove);
+          document.removeEventListener("touchend", onTouchEnd);
+        }
+
+        document.addEventListener("touchmove", onTouchMove, { passive: false });
+        document.addEventListener("touchend", onTouchEnd, { passive: false });
+      });
+    }
+
+    document.getElementById("next-button").addEventListener("click", () => {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion(currentQuestion);
+      } else {
+        document.getElementById("quiz-container").innerHTML =
+          `<h2>Hotovo!</h2><pPočet chyb: ${errors}</p>`;
+      }
+    });
+
+    // Inicializace
+    loadQuestion(currentQuestion);
+  </script>
+</body>
+</html>
