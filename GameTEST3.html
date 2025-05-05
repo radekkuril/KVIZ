@@ -452,6 +452,7 @@
           if (draggedObject.textContent.toLowerCase() === target.dataset.correct) {
             target.style.backgroundColor = "lightgreen";
             target.appendChild(draggedObject);
+            target.disabled = true;
           if (checkAllCorrect(container)) {
              nextRound();
            }
