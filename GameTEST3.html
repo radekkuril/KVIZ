@@ -232,7 +232,7 @@
     let startTime;
     const container = document.getElementById('quiz-container');
     const timerEl = document.getElementById('timer');
-    var round,errors=0,seconds;
+    var round,errors=0,seconds,draggedObject;
 
     document.getElementById('start-btn').onclick = () => {
       document.getElementById('start-btn').style.display = 'none';
@@ -415,6 +415,7 @@
       el.addEventListener("touchstart", function (e) {
         const touch = e.touches[0];
         const rect = el.getBoundingClientRect();
+        draggedObject = el;
         el.dataset.offsetX = touch.clientX - rect.left;
         el.dataset.offsetY = touch.clientY - rect.top;
 
@@ -423,7 +424,10 @@
         el.classList.add("dragging");
       }
     );
-    function moveAt(el,x, y) {
+
+
+    }
+        function moveAt(el,x, y) {
       el.style.left = (x - el.dataset.offsetX) + 'px';
       el.style.top = (y - el.dataset.offsetY) + 'px';
     }
@@ -434,20 +438,20 @@
       }
 
       function onTouchEnd(e) {
-        el.classList.remove("dragging");
-        el.style.position = '';
-        el.style.left = '';
-        el.style.top = '';
-        el.style.zIndex = '';
+        draggedObject.classList.remove("dragging");
+        draggedObject.style.position = '';
+        draggedObject.style.left = '';
+        draggedObject.style.top = '';
+        draggedObject.style.zIndex = '';
 
         const touchEnd = e.changedTouches[0];
         const target = document.elementFromPoint(touchEnd.clientX, touchEnd.clientY);
 
         if (target && target.classList.contains("drop-zone")) {
           target.innerHTML = '';
-          if (el.textContent.toLowerCase() === target.dataset.correct) {
+          if (draggedObject.textContent.toLowerCase() === target.dataset.correct) {
             target.style.backgroundColor = "lightgreen";
-            target.appendChild(el);
+            target.appendChild(draggedObject);
           if (checkAllCorrect(container)) {
              nextRound();
            }
@@ -455,14 +459,10 @@
           } else {
             target.style.backgroundColor = "red";
             errors++;
-            document.querySelector('.optionsBox').appendChild(el);
+            document.querySelector('.optionsBox').appendChild(draggedObject);
           }
         }
       }
-    document.addEventListener("touchmove", onTouchMove, { passive: false });
-    document.addEventListener("touchend", onTouchEnd, { passive: false });
-
-    }
       function checkAllCorrect(container) {
       const inputs = container.querySelectorAll('input');
       const buttons = container.getElementsByClassName('rightAnswer');
@@ -496,6 +496,8 @@
     const mail = params.get("xmail"); //
     const namePar = document.getElementById('namePar');
     namePar.textContent = jmeno;
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    document.addEventListener("touchend", onTouchEnd, { passive: false });
     
   </script>
 </body>
