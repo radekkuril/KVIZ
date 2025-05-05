@@ -445,9 +445,9 @@
 
         if (target && target.classList.contains("drop-zone")) {
           target.innerHTML = '';
-          target.appendChild(el);
           if (el.textContent.toLowerCase() === target.dataset.correct) {
             target.style.backgroundColor = "lightgreen";
+            target.appendChild(el);
           if (checkAllCorrect(container)) {
              nextRound();
            }
