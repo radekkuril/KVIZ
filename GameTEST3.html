@@ -378,38 +378,85 @@
       input.style.backgroundColor = "yellow";
     }  
     function handleDrop(event){
-            const input = event.currentTarget;
-            event.preventDefault();
-            input.style.backgroundColor = "";
-          
-            const data = event.dataTransfer.getData("text/plain"); // očekáváme text nebo ID
-          
-            // Pokusíme se najít prvek podle ID a vložit ho do divu
-            const draggedElement = document.getElementById(data);
-            if (draggedElement) {
-              input.appendChild(draggedElement);
-            } else {
-              input.textContent = data; // fallback, pokud je to jen text
-            }
-            if (input.textContent.toLowerCase() === input.dataset.correct) {
-              input.style.backgroundColor = 'lightgreen';
-              if(input.imgBox){
-                input.imgBox.style.width="200px";
-                input.imgBox.style.height="200px";
-              }
-              input.disabled = true;
-              input.removeEventListener("drop",handleDrop);
-              input.removeEventListener("dragover", handleDragOver);
-              input.removeEventListener("dragleave", handleDragLeave);
-              if (checkAllCorrect(container)) {
-               nextRound();
-               }
-            } else {
-              input.style.backgroundColor = 'red';
-              errors++;
-            }
+        const input = event.currentTarget;
+        event.preventDefault();
+        input.style.backgroundColor = "";
+      
+        const data = event.dataTransfer.getData("text/plain"); // očekáváme text nebo ID
+      
+        // Pokusíme se najít prvek podle ID a vložit ho do divu
+        const draggedElement = document.getElementById(data);
+        if (draggedElement) {
+          input.appendChild(draggedElement);
+        } else {
+          input.textContent = data; // fallback, pokud je to jen text
+        }
+        if (input.textContent.toLowerCase() === input.dataset.correct) {
+          input.style.backgroundColor = 'lightgreen';
+          if(input.imgBox){
+            input.imgBox.style.width="200px";
+            input.imgBox.style.height="200px";
           }
+          input.disabled = true;
+          input.removeEventListener("drop",handleDrop);
+          input.removeEventListener("dragover", handleDragOver);
+          input.removeEventListener("dragleave", handleDragLeave);
+          if (checkAllCorrect(container)) {
+           nextRound();
+           }
+        } else {
+          input.style.backgroundColor = 'red';
+          errors++;
+        }
+      }
 
+    function enableTouchDrag(el, dropZone) {
+      el.addEventListener("touchstart", function (e) {
+        const touch = e.touches[0];
+        const rect = el.getBoundingClientRect();
+        el.dataset.offsetX = touch.clientX - rect.left;
+        el.dataset.offsetY = touch.clientY - rect.top;
+
+        el.style.position = 'absolute';
+        el.style.zIndex = 1000;
+        el.classList.add("dragging");
+      }
+    
+    function moveAt(el,x, y) {
+      el.style.left = (x - el.dataset.offsetX) + 'px';
+      el.style.top = (y - el.dataset.offsetY) + 'px';
+    }
+  
+    function onTouchMove(e) {
+        const touchMove = e.touches[0];
+        moveAt(touchMove.el,touchMove.pageX, touchMove.pageY);
+      }
+
+      function onTouchEnd(e) {
+        el.classList.remove("dragging");
+        el.style.position = '';
+        el.style.left = '';
+        el.style.top = '';
+        el.style.zIndex = '';
+
+        const touchEnd = e.changedTouches[0];
+        const target = document.elementFromPoint(touchEnd.clientX, touchEnd.clientY);
+
+        if (target && target.classList.contains("drop-zone")) {
+          target.innerHTML = '';
+          target.appendChild(el);
+          if (el.textContent.toLowerCase() === target.dataset.correct) {
+            target.style.backgroundColor = "lightgreen";
+            document.getElementById("next-button").style.display = "block";
+          } else {
+            target.style.backgroundColor = "red";
+            errors++;
+          }
+        }
+      }
+        document.removeEventListener("touchmove", onTouchMove);
+        document.removeEventListener("touchend", onTouchEnd);
+      }
     function checkAllCorrect(container) {
       const inputs = container.querySelectorAll('input');
       const buttons = container.getElementsByClassName('rightAnswer');
@@ -442,7 +489,9 @@
     const kviz = params.get("xkviz");       // "123"
     const mail = params.get("xmail"); //
     const namePar = document.getElementById('namePar');
-    namePar.textContent = jmeno + " - " + document.referrer;  
+    namePar.textContent = jmeno;
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    document.addEventListener("touchend", onTouchEnd, { passive: false });
   </script>
 </body>
 </html>
