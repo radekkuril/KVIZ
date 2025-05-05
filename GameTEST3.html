@@ -342,6 +342,7 @@
               div2.addEventListener("dragstart", (event) => {
                 event.dataTransfer.setData("text/plain", div2.textContent); // nebo jiný identifikátor
               });
+              enableTouchDrag(div2);
               optionsBox.appendChild(div2);
             });
             container.appendChild(optionsBox);
@@ -410,7 +411,7 @@
         }
       }
 
-    function enableTouchDrag(el, dropZone) {
+    function enableTouchDrag(el) {
       el.addEventListener("touchstart", function (e) {
         const touch = e.touches[0];
         const rect = el.getBoundingClientRect();
@@ -454,10 +455,8 @@
           }
         }
       }
-        document.removeEventListener("touchmove", onTouchMove);
-        document.removeEventListener("touchend", onTouchEnd);
-      }
-    function checkAllCorrect(container) {
+    }
+      function checkAllCorrect(container) {
       const inputs = container.querySelectorAll('input');
       const buttons = container.getElementsByClassName('rightAnswer');
       const zones = container.getElementsByClassName('drop-zone');
@@ -492,6 +491,7 @@
     namePar.textContent = jmeno;
     document.addEventListener("touchmove", onTouchMove, { passive: false });
     document.addEventListener("touchend", onTouchEnd, { passive: false });
+    
   </script>
 </body>
 </html>
