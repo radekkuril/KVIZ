@@ -70,6 +70,7 @@
             div1.className = "imageBox";
             const img = document.createElement('img');
             img.src=key;
+              img.style.width='150px';
             div1.appendChild(img);
             div.appendChild(div1);
           }
