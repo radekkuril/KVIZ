@@ -4,7 +4,7 @@
     const container = document.getElementById('quiz-container');
     const timerEl = document.getElementById('timer');
     var round,errors=0,seconds,draggedObject;
-    const clFill = '#0E3A2F',clColor = '#78FAAE';
+    const clFill = '#0E3A2F',clColor = "rgb(120, 250, 174)";
 
     document.getElementById('start-btn').onclick = () => {
       document.getElementById('start-btn').style.display = 'none';
