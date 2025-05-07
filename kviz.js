@@ -272,7 +272,7 @@
                     [...inputs].every(input => input.disabled):
                      [...zones].every(input => input.disabled)
                 ):
-                [...buttons].every(btn => btn.style.backgroundColor === 'lightgreen')
+                [...buttons].every(btn => btn.style.backgroundColor === clColor)
             );
     }
 
