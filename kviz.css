@@ -8,6 +8,17 @@ body {
   background-position: center center;  /* vystředí obrázek */
   background-repeat: no-repeat;        /* zabrání opakování */
 }
+button{
+  padding: 10px 30px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 999px; /* silně zaoblené rohy */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
     #quiz-container { display: none; }
     .question-block { display: block; margin-top: 20px; }
     .imageBox {width: 100px;height:50px;overflow:hidden;display:inline-block;}
