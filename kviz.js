@@ -43,7 +43,9 @@
             btn.textContent = opt;
             btn.onclick = () => {
               if (i === q.answer) {
-                btn.style.backgroundColor = 'lightgreen';
+                btn.style.backgroundColor = '#0E3A2F';
+                btn.style.border = '2px solid #78FAAE';
+                btn.style.color = '#78FAAE';
                 btn.disabled = true;
                 if (checkAllCorrect(container)){
                     nextRound();
