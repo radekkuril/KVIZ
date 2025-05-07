@@ -1,4 +1,13 @@
-body { font-family: Arial, sans-serif; padding: 20px; }
+body {
+    font-family: Arial, sans-serif; 
+    padding: 20px; 
+    height: 100vh;
+
+  background-image: url('./img/background.jpg'); /* cesta k tvému obrázku */
+  background-size: cover;              /* roztáhne obrázek na celou obrazovku */
+  background-position: center center;  /* vystředí obrázek */
+  background-repeat: no-repeat;        /* zabrání opakování */
+}
     #quiz-container { display: none; }
     .question-block { display: block; margin-top: 20px; }
     .imageBox {width: 100px;height:50px;overflow:hidden;display:inline-block;}
