@@ -4,6 +4,7 @@
     const container = document.getElementById('quiz-container');
     const timerEl = document.getElementById('timer');
     var round,errors=0,seconds,draggedObject;
+    const clFill = '#0E3A2F',clColor = '#78FAAE';
 
     document.getElementById('start-btn').onclick = () => {
       document.getElementById('start-btn').style.display = 'none';
@@ -43,9 +44,8 @@
             btn.textContent = opt;
             btn.onclick = () => {
               if (i === q.answer) {
-                btn.style.backgroundColor = '#0E3A2F';
-                btn.style.border = '2px solid #78FAAE';
-                btn.style.color = '#78FAAE';
+                btn.style.backgroundColor = clColor;
+                btn.style.color = clFill;
                 btn.disabled = true;
                 if (checkAllCorrect(container)){
                     nextRound();
