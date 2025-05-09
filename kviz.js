@@ -73,6 +73,7 @@
               img.style.width='150px';
             div1.appendChild(img);
             div.appendChild(div1);
+              AddSVGobject(div);
           }
           else{
             div.textContent = `Co odpovídá: ${key}?`;
@@ -266,6 +267,52 @@
           }
         }
       }
+
+    function AddSVGobject(object){
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("width", "200");
+        svg.setAttribute("height", "200");
+        svg.setAttribute("viewBox", "0 0 200 200");
+    
+        // Vytvoření bílé vrstvy
+        const whiteRect = document.createElementNS(svgNS, "rect");
+        whiteRect.setAttribute("x", "0");
+        whiteRect.setAttribute("y", "0");
+        whiteRect.setAttribute("width", "200");
+        whiteRect.setAttribute("height", "200");
+        whiteRect.setAttribute("fill", "white");
+    
+        // Maska s průhledným kruhem
+        const mask = document.createElementNS(svgNS, "mask");
+        mask.setAttribute("id", "hole-mask");
+    
+        const maskRect = document.createElementNS(svgNS, "rect");
+        maskRect.setAttribute("x", "0");
+        maskRect.setAttribute("y", "0");
+        maskRect.setAttribute("width", "200");
+        maskRect.setAttribute("height", "200");
+        maskRect.setAttribute("fill", "white"); // Neprůhledná oblast
+    
+        const maskCircle = document.createElementNS(svgNS, "circle");
+        maskCircle.setAttribute("cx", "100");
+        maskCircle.setAttribute("cy", "100");
+        maskCircle.setAttribute("r", "50");
+        maskCircle.setAttribute("fill", "black"); // Průhledná oblast
+    
+        mask.appendChild(maskRect);
+        mask.appendChild(maskCircle);
+        svg.appendChild(mask);
+    
+        // Použití masky na čtverec
+        whiteRect.setAttribute("mask", "url(#hole-mask)");
+    
+        // Přidání prvků do SVG
+        svg.appendChild(whiteRect);
+    
+        // Vložení SVG do dokumentu
+        object.appendChild(svg);
+    }
       function checkAllCorrect(container) {
       const inputs = container.querySelectorAll('input');
       const buttons = container.getElementsByClassName('rightAnswer');
