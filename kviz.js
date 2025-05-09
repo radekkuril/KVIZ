@@ -252,20 +252,33 @@
         const target = document.elementFromPoint(touchEnd.clientX, touchEnd.clientY);
 
         if (target && target.classList.contains("drop-zone")) {
-          target.innerHTML = '';
-          if (draggedObject.textContent.toLowerCase() === target.dataset.correct) {
-            target.style.backgroundColor = "lightgreen";
+        if((round.type === "puzzle")){
             target.appendChild(draggedObject);
-            target.disabled = true;
-          if (checkAllCorrect(container)) {
-             nextRound();
-           }
-
-          } else {
-            target.style.backgroundColor = "red";
-            errors++;
-            document.querySelector('.optionsBox').appendChild(draggedObject);
-          }
+                const puzzlePrvky = target.querySelectorAll('.puzzle');
+                var result=true,i=0;
+                puzzlePrvky.forEach(puzzle => {
+                  result=result && (puzzle.nr == round.answer[i++]);
+                });
+                if(result && round.answer.length==puzzlePrvky.length){
+                    dropzone.style.backgroundColor = "lightgreen";
+                    nextRound();
+                }
+         }
+         else{ 
+              target.innerHTML = '';
+              if (draggedObject.textContent.toLowerCase() === target.dataset.correct) {
+                target.style.backgroundColor = "lightgreen";
+                target.appendChild(draggedObject);
+                target.disabled = true;
+              if (checkAllCorrect(container)) {
+                 nextRound();
+               }
+              } else {
+                target.style.backgroundColor = "red";
+                errors++;
+                document.querySelector('.optionsBox').appendChild(draggedObject);
+              }
+            }
         }
       }
 
