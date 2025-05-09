@@ -244,7 +244,7 @@
       function onTouchEnd(e) {
         if(!draggedObject) return;
         //draggedObject.classList.remove("dragging");
-        draggedObject.style.position = '';
+        //draggedObject.style.position = '';
         draggedObject.style.left = '';
         draggedObject.style.top = '';
         draggedObject.style.zIndex = '';
