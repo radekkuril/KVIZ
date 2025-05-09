@@ -222,7 +222,7 @@
         draggedObject = el;
         el.dataset.offsetX = touch.clientX - rect.left;
         el.dataset.offsetY = touch.clientY - rect.top;
-
+        el.parentNode.removeChild(el);
         el.style.position = 'absolute';
         el.style.zIndex = 1000;
         el.classList.add("dragging");
