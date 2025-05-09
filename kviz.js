@@ -62,7 +62,7 @@
       } else if (round.type === 'match') {
         const entries = Object.entries(round.pairs);
         var div1;
-        entries.forEach((objekt, index) => {
+        round.pairs.forEach((objekt, index) => {
           const div = document.createElement('div');
           div.className = 'question-block';
           if(objekt.img){        //je tam odkaz na obrázek
@@ -76,7 +76,7 @@
               AddSVGobject(div,img.offsetHeight,img,offsetWidth,objekt.x,objekt.y,objekt.r);
           }
           else{
-            div.textContent = `Co odpovídá: ${key}?`;
+            div.textContent = `Co odpovídá: ${object.question}?`;
           }
           const input = document.createElement('div');
           input.className = 'drop-zone';
