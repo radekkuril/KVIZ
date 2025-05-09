@@ -71,7 +71,7 @@ svg{
     .puzzle{
         width: 115px;
         height: 60px;        
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 120'><rect x='0' y='0' width='200' height='120' fill='%2378FAAE'/><path d='M0,30 A10,10 0 1,1 0,90' fill='%230E3A2F'/><path d='M200,30 A10,10 0 1,1 200,90' fill='%2378FAAE'/> stroke='red' fill='green'/></svg>");
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 120'><rect x='0' y='0' width='200' height='120' fill='%2378FAAE'/><path d='M0,30 A10,10 0 1,1 0,90' fill='%230E3A2F'/><path d='M200,30 A10,10 0 1,1 200,90' fill='%2378FAAE'/> stroke='red' fill='%2378FAAE'/></svg>");
         background-size: cover;
         background-repeat: no-repeat;
         border: 0px solid #999;
