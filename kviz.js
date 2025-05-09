@@ -108,6 +108,7 @@
             const options = Object.entries(round.options);
             const optionsBox = document.createElement('div');
             optionsBox.className='optionsBox';
+            optionsBox.style.width = '100%';
             options.forEach((opt, i) => {
               const div2 = document.createElement('div');
               div2.className = 'drag-block';
