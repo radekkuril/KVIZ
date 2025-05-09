@@ -271,8 +271,8 @@
     function AddSVGobject(object){
         const svgNS = "http://www.w3.org/2000/svg";
         const svg = document.createElementNS(svgNS, "svg");
-        svg.setAttribute("width", "200");
-        svg.setAttribute("height", "200");
+        svg.setAttribute("width", "150");
+        svg.setAttribute("height", "150");
         svg.setAttribute("viewBox", "0 0 200 200");
     
         // Vytvoření bílé vrstvy
@@ -297,7 +297,7 @@
         const maskCircle = document.createElementNS(svgNS, "circle");
         maskCircle.setAttribute("cx", "100");
         maskCircle.setAttribute("cy", "100");
-        maskCircle.setAttribute("r", "50");
+        maskCircle.setAttribute("r", "20");
         maskCircle.setAttribute("fill", "black"); // Průhledná oblast
     
         mask.appendChild(maskRect);
