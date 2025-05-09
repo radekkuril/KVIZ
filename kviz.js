@@ -73,7 +73,8 @@
               img.style.width='150px';
             div1.appendChild(img);
             div.appendChild(div1);
-              AddSVGobject(div,img.offsetHeight,img,offsetWidth,objekt.x,objekt.y,objekt.r);
+              const rect = img.getBoundingClientRect();
+              AddSVGobject(div, rect.width, rect.height, objekt.x, objekt.y, objekt.r);
           }
           else{
             div.textContent = `Co odpovídá: ${object.question}?`;
@@ -268,7 +269,7 @@
         }
       }
 
-    function AddSVGobject(object,pHeight,pWidth, pX,pY,pR){
+    function AddSVGobject(object, pWidth, pHeight, pX, pY, pR){
         const svgNS = "http://www.w3.org/2000/svg";
         const svg = document.createElementNS(svgNS, "svg");
         svg.setAttribute("width", pWidth);
