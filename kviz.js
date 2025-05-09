@@ -130,6 +130,7 @@
         componentsBox.addEventListener("dragover", handleDragOver);
         componentsBox.addEventListener("dragleave", handleDragLeave);
         componentsBox.addEventListener("drop", handleDrop);
+        componentsBox.style.width="100%";
         components.forEach((opt, i) => {
           const div2 = document.createElement('div');
           div2.id="puzzle"+opt[0];
