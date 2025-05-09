@@ -4,7 +4,7 @@
     const container = document.getElementById('quiz-container');
     const timerEl = document.getElementById('timer');
     var round,errors=0,seconds,draggedObject;
-    const clFill = '#0E3A2F',clColor = "rgb(120, 250, 174)";
+    const clFill = '#0E3A2F',clColor = "rgb(120, 250, 174)",clAllowDrop = "rgb(220, 220, 220)";
 
     document.getElementById('start-btn').onclick = () => {
       document.getElementById('start-btn').style.display = 'none';
@@ -162,7 +162,7 @@
     function handleDragOver(event){
       const input = event.currentTarget;
       event.preventDefault(); // Nutné pro umožnění dropu
-      input.style.backgroundColor = "yellow";
+      input.style.backgroundColor = clAllowDrop;
     }  
     function handleDrop(event){
         const input = event.currentTarget;
