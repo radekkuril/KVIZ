@@ -62,25 +62,25 @@
       } else if (round.type === 'match') {
         const entries = Object.entries(round.pairs);
         var div1;
-        entries.forEach(([key, val]) => {
+        entries.forEach((objekt, index) => {
           const div = document.createElement('div');
           div.className = 'question-block';
-          if(key.substring(1,5) === "/img"){
+          if(objekt.img){        //je tam odkaz na obrázek
             div1 = document.createElement('div');
             div1.className = "imageBox";
             const img = document.createElement('img');
-            img.src=key;
+            img.src=objekt.img;
               img.style.width='150px';
             div1.appendChild(img);
             div.appendChild(div1);
-              AddSVGobject(div);
+              AddSVGobject(div,img.offsetHeight,img,offsetWidth,objekt.x,objekt.y,objekt.r);
           }
           else{
             div.textContent = `Co odpovídá: ${key}?`;
           }
           const input = document.createElement('div');
           input.className = 'drop-zone';
-          input.dataset.correct = val.toLowerCase();
+          input.dataset.correct = objekt.result.toLowerCase();
           input.imgBox = div1;
           input.addEventListener("dragover", handleDragOver);
           input.addEventListener("dragleave", handleDragLeave);
@@ -268,11 +268,11 @@
         }
       }
 
-    function AddSVGobject(object){
+    function AddSVGobject(object,pHeight,pWidth, pX,pY,pR){
         const svgNS = "http://www.w3.org/2000/svg";
         const svg = document.createElementNS(svgNS, "svg");
-        svg.setAttribute("width", "150");
-        svg.setAttribute("height", "150");
+        svg.setAttribute("width", pWidth);
+        svg.setAttribute("height", pHeight);
         svg.setAttribute("viewBox", "0 0 200 200");
     
         // Vytvoření bílé vrstvy
@@ -295,9 +295,9 @@
         maskRect.setAttribute("fill", "white"); // Neprůhledná oblast
     
         const maskCircle = document.createElementNS(svgNS, "circle");
-        maskCircle.setAttribute("cx", "100");
-        maskCircle.setAttribute("cy", "100");
-        maskCircle.setAttribute("r", "20");
+        maskCircle.setAttribute("cx", pX);
+        maskCircle.setAttribute("cy", pY);
+        maskCircle.setAttribute("r", pR);
         maskCircle.setAttribute("fill", "black"); // Průhledná oblast
     
         mask.appendChild(maskRect);
