@@ -77,7 +77,7 @@
               AddSVGobject(div, 150, 150, objekt.x, objekt.y, objekt.r);
           }
           else{
-            div.textContent = `Co odpovídá: ${object.question}?`;
+            div.textContent = `Co odpovídá: ${objekt.question}?`;
           }
           const input = document.createElement('div');
           input.className = 'drop-zone';
