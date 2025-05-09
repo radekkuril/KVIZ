@@ -261,7 +261,7 @@
                   result=result && (puzzle.nr == round.answer[i++]);
                 });
                 if(result && round.answer.length==puzzlePrvky.length){
-                    dropzone.style.backgroundColor = "lightgreen";
+                    target.style.backgroundColor = "lightgreen";
                     nextRound();
                 }
          }
