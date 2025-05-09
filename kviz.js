@@ -224,8 +224,8 @@
         el.dataset.offsetY = touch.clientY - rect.top;
         document.body.appendChild(el);
         el.style.position = 'absolute';
-        el.style.left = (el.dataset.offsetX) + 'px';
-        el.style.top = (el.dataset.offsetY) + 'px';
+        el.style.left = (touch.clientX) + 'px';
+        el.style.top = (touch.clientY) + 'px';
         el.style.zIndex = 1000;
         el.classList.add("dragging");
       }
