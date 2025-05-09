@@ -77,12 +77,12 @@
       {
         title: "Poznejte značku z neúplného loga",
         type: "match",
-        pairs: {
-          "./img/Volkswagen.png": "Volkswagen",
-          "./img/Mercedes.png": "Mercedes",
-          "./img/Audi.png": "Audi",
-          "./img/Toyota.jpg": "Toyota"
-        },
+        pairs: [
+          {img:"./img/Volkswagen.png",result:"Volkswagen",x:50,y:20,r:35},
+          {img:"./img/Mercedes.png",result: "Mercedes",x:50,y:20,r:35},
+          {img:"./img/Audi.png",result: "Audi",x:50,y:20,r:35},
+          {img:"./img/Toyota.jpg",result: "Toyota",x:50,y:20,r:35}
+        ],
         options:["Audi","BMW","Citroen","Datsun","Fiat","Honda","Kia","Mercedes","Peugeot","Porsche","Toyota","Volkswagen"]
       },
       {
