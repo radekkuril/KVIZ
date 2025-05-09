@@ -74,7 +74,7 @@
             div1.appendChild(img);
             div.appendChild(div1);
               const rect = img.getBoundingClientRect();
-              AddSVGobject(div, rect.width, rect.height, objekt.x, objekt.y, objekt.r);
+              AddSVGobject(div, 150, 150, objekt.x, objekt.y, objekt.r);
           }
           else{
             div.textContent = `Co odpovídá: ${object.question}?`;
