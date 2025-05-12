@@ -32,6 +32,7 @@
         round.questions.forEach((q, index) => {
           const block = document.createElement('div');
           block.className = 'question-block';
+          block.style.width='100%';  
           
           const question = document.createElement('div');
           question.className = 'question';
