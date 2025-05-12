@@ -276,7 +276,8 @@
                 target.style.backgroundColor = "lightgreen";
                 target.appendChild(draggedObject);
                 target.disabled = true;
-                document.getElementById("svgId" + draggedObject.textContent.toLowerCase()).style.visibility = "hidden";
+                var obj = document.getElementById("svgId" + draggedObject.textContent.toLowerCase());
+                if(obj) obj.style.visibility = "hidden";
               if (checkAllCorrect(container)) {
                  nextRound();
                }
