@@ -276,6 +276,7 @@
                 target.style.backgroundColor = "lightgreen";
                 target.appendChild(draggedObject);
                 target.disabled = true;
+                document.getElementById("svgId" + draggedObject.textContent.toLowerCase()).style.visibility = "hidden";
               if (checkAllCorrect(container)) {
                  nextRound();
                }
@@ -295,6 +296,7 @@
     function AddSVGobject(object, pWidth, pHeight, pX, pY, pR, idx){
         const svgNS = "http://www.w3.org/2000/svg";
         const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("id", "svgId" + idx);
         svg.setAttribute("width", pWidth);
         svg.setAttribute("height", pHeight);
         svg.setAttribute("viewBox", "0 0 200 200");
