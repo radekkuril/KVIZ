@@ -121,6 +121,7 @@
               });
               enableTouchDrag(div2);
               optionsBox.appendChild(div2);
+                div2.start = optionsBox;
             });
             container.appendChild(optionsBox);
         }
@@ -145,6 +146,7 @@
           });
           enableTouchDrag(div2);
           componentsBox.appendChild(div2);
+            div2.start=componentsBox;
         });
         container.appendChild(componentsBox);
         const targetBox = document.createElement('div');
@@ -281,8 +283,11 @@
                 errors++;
                 document.querySelector('.optionsBox').appendChild(draggedObject);
               }
-            }
+          }
         }
+          else{
+              if(draggedObject.start) draggedObject.start.appendChild(draggedObject);
+          }
       }
 
     function AddSVGobject(object, pWidth, pHeight, pX, pY, pR){
