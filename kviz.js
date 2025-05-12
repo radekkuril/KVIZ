@@ -288,6 +288,7 @@
           else{
               if(draggedObject.start) draggedObject.start.appendChild(draggedObject);
           }
+          draggedObject = null;
       }
 
     function AddSVGobject(object, pWidth, pHeight, pX, pY, pR){
