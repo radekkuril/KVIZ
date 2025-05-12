@@ -66,6 +66,7 @@
         round.pairs.forEach((objekt, index) => {
           const div = document.createElement('div');
           div.className = 'question-block';
+            div.style.height="200px";
           if(objekt.img){        //je tam odkaz na obrázek
             div1 = document.createElement('div');
             div1.className = "imageBox";
