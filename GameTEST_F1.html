@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+  <meta charset="UTF-8">
+  <title>Automobilový kvíz</title>
+  <link rel="stylesheet" href="kviz.css">
+</head>
+<body>
+  <h1>Automobilový kvíz <span id='namePar'></p></h1>
+  <button id="start-btn" class="btn">Začít kvíz</button>
+  <div id="timer"></div>
+  <div id="quiz-container"></div>
+
+  <script>
+    const quizData = [
+        {
+            title: "Seřaď IT komponenty pro čtení dat ze strojů:",
+            type:"puzzle",
+            components : ["Databáze","Kepware","IT PEP","PSB","PLC","DAP","USB","POD"],
+            answer: [4,1,3,0]
+        },
+
+        {
+            title: "Seřaď výraz od nejmenšího:",
+            type:"puzzle",
+            components : ["CLXVIII","11001001","B9", "29","100/4","5*6"],
+            answer: [4,3,5,2,0,1]
+        }
+    ];
+  </script>
+  <script src="kviz.js"></script>
+</body>
+</html>

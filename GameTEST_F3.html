@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+  <meta charset="UTF-8">
+  <title>Automobilový kvíz</title>
+  <link rel="stylesheet" href="kviz.css">
+</head>
+<body>
+  <h1>Automobilový kvíz <span id='namePar'></p></h1>
+  <button id="start-btn" class="btn">Začít kvíz</button>
+  <div id="timer"></div>
+  <div id="quiz-container"></div>
+
+  <script>
+    const quizData = [
+      {
+        title: "Poznejte značku z neúplného loga",
+        type: "match",
+        pairs: [
+          {img:"./img/Volkswagen.png",result:"Volkswagen",x:100,y:100,r:50},
+          {img:"./img/Mercedes.png",result: "Mercedes",x:50,y:20,r:35},
+          {img:"./img/Audi1.png",result: "Audi",x:50,y:20,r:35},
+          {img:"./img/Toyota.jpg",result: "Toyota",x:100,y:100,r:50}
+        ],
+        options:["Audi","BMW","Citroen","Datsun","Fiat","Honda","Kia","Mercedes","Peugeot","Porsche","Toyota","Volkswagen"]
+      },
+      {
+        title: "Přiřazení čísel typů aut k automobilovým značkám",
+        type: "match",
+        pairs: [
+          {question : "5008", result : "Peugeot"},
+          {question : "911" ,result : "Porsche"},
+          {question : "124" ,result : "Fiat"},
+          {question : "320" ,result : "BMW"}
+        ],
+        options:["Audi","BMW","Citroen","Datsun","Fiat","Honda","Kia","Mercedes","Peugeot","Porsche","Toyota","Volkswagen"]
+      }        
+    ];
+  </script>
+  <script src="kviz.js"></script>
+</body>
+</html>

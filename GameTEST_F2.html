@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+  <meta charset="UTF-8">
+  <title>Automobilový kvíz</title>
+  <link rel="stylesheet" href="kviz.css">
+</head>
+<body>
+  <h1>Automobilový kvíz <span id='namePar'></p></h1>
+  <button id="start-btn" class="btn">Začít kvíz</button>
+  <div id="timer"></div>
+  <div id="quiz-container"></div>
+
+  <script>
+    const quizData = [
+      {
+        title: "Digitální systémy v automobilu",
+        questions: [
+          {
+            "question": "Co znamená zkratka ECU v automobilové elektronice?",
+            "options": ["Electronic Control Unit", "Engine Calibration Unit", "Electric Communication Utility", "Engine Control Upgrade"],
+            "answer": 0
+          },
+          {
+            "question": "Jaký je hlavní účel systému ADAS?",
+            "options": ["Zlepšení pohodlí cestujících", "Navigace vozidla", "Podpora řidiče a zvýšení bezpečnosti", "Optimalizace spotřeby paliva"],
+            "answer": 2
+          },
+          {
+            "question": "Který systém zajišťuje automatické nouzové brzdění?",
+            "options": ["ABS", "ESP", "AEB", "TPMS"],
+            "answer": 2
+          }/*,
+          {
+            "question": "K čemu slouží CAN sběrnice v automobilu?",
+            "options": ["K nabíjení baterie", "K řízení klimatizace", "K měření emisí", "Ke komunikaci mezi řídicími jednotkami"],
+            "answer": 3
+          },
+          {
+            "question": "Jaký je význam systému OBD-II?",
+            "options": ["Zajištění bezpečnostních pásů", "Sledování emisí a diagnostika poruch", "Předpověď počasí", "Navigace ve městech"],
+            "answer": 1
+          },
+          {
+            "question": "Který senzor se používá pro rozpoznání mrtvého úhlu?",
+            "options": ["Gyroskop", "Ultrazvukový senzor", "Radarový senzor", "Kamera pro noční vidění"],
+            "answer": 2
+          },
+          {
+            "question": "Jaký typ zobrazení využívá Head-Up Display (HUD)?",
+            "options": ["Projekci informací na čelní sklo", "3D hologram", "Navigaci přes tablet", "Infračervený displej na volantu"],
+            "answer": 0
+          },
+          {
+            "question": "K čemu slouží systém TPMS?",
+            "options": ["Detekce nehod", "Kontrola tlaku v pneumatikách", "Měření teploty motoru", "Řízení podvozku"],
+            "answer": 1
+          },
+          {
+            "question": "Jaký účel má infotainment systém v moderním voze?",
+            "options": ["Řízení motoru", "Zajištění bezpečnostních funkcí", "Diagnostika podvozku", "Zábava a informace pro řidiče a pasažéry"],
+            "answer": 3
+          },
+          {
+            "question": "Co umožňuje funkce OTA (Over-the-Air) v digitálních systémech auta?",
+            "options": ["Automatické otevírání dveří", "Výměnu fyzických komponentů", "Bezdrátovou aktualizaci softwaru", "Zvýšení výkonu motoru"],
+            "answer": 2
+          }*/
+        ]
+      },
+      {
+        title: "Elektromobily",
+        questions: [
+          {
+            question: "Která značka vyrábí model EX30?",
+            options: ["Volvo", "Toyota", "Nissan", "Ford"],
+            answer: 0
+          },
+          {
+            question: "Co znamená WLTP?",
+            options: ["Typ akumulátoru", "Způsob měření dojezdu", "Značka elektromobilu", "Systém klimatizace"],
+            answer: 1
+          }
+        ]
+      },
+      {
+        title: "Historie automobilismu",
+        questions: [
+           {
+            "question": "Kdy byla založena společnost první společnost předcházející automobilce Škoda Auto?",
+            "options": ["1895", "1905", "1925", "1935"],
+            "answer": 0
+          },
+          {
+            "question": "Kdo byli zakladatelé původní firmy Laurin & Klement?",
+            "options": ["Emil Škoda a Jan Perner", "Ferdinand Porsche a Jan Kašpar", "Václav Laurin a Václav Klement", "Karel Loprais a Václav Klement"],
+            "answer": 2
+          }/*,
+          {
+            "question": "Jaký byl první automobil značky Laurin & Klement?",
+            "options": ["Voiturette A", "Škoda Popular", "Felicia", "Octavia"],
+            "answer": 0
+          },
+          {
+            "question": "V kterém roce došlo ke spojení Laurin & Klement se Škodovkou?",
+            "options": ["1918", "1925", "1930", "1945"],
+            "answer": 1
+          },
+          {
+            "question": "Který model Škody byl ikonou 60. let 20. století?",
+            "options": ["Škoda Favorit", "Škoda 1000 MB", "Škoda Rapid", "Škoda Superb"],
+            "answer": 1
+          },
+          {
+            "question": "Kdy byl uveden na trh model Škoda Favorit?",
+            "options": ["1983", "1987", "1991", "1995"],
+            "answer": 1
+          },
+          {
+            "question": "Kdy se Škoda Auto stala součástí koncernu Volkswagen?",
+            "options": ["1991", "1995", "1998", "2001"],
+            "answer": 0
+          },
+          {
+            "question": "Který model zahájil moderní éru značky po vstupu do VW Group?",
+            "options": ["Octavia", "Felicia", "Fabia", "Superb"],
+            "answer": 1
+          },
+          {
+            "question": "Jaký název nesl první elektromobil značky Škoda vyráběný sériově?",
+            "options": ["Škoda E-Citigo", "Škoda Eltra", "Škoda Enyaq iV", "Škoda Octavia Green"],
+            "answer": 0
+          },
+          {
+            "question": "Kde sídlí hlavní závod Škoda Auto?",
+            "options": ["Praha", "Brno", "Mladá Boleslav", "Plzeň"],
+            "answer": 2
+          }*/
+        ]
+      }
+    ];
+  </script>
+  <script src="kviz.js"></script>
+</body>
+</html>
