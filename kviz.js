@@ -75,7 +75,7 @@
             div1.appendChild(img);
             div.appendChild(div1);
               const rect = img.getBoundingClientRect();
-              AddSVGobject(div, 150, 150, objekt.x, objekt.y, objekt.r);
+              AddSVGobject(div, 150, 150, objekt.x, objekt.y, objekt.r,objekt.result.toLowerCase());
           }
           else{
             div.textContent = `Co odpovídá: ${objekt.question}?`;
@@ -292,7 +292,7 @@
           draggedObject = null;
       }
 
-    function AddSVGobject(object, pWidth, pHeight, pX, pY, pR){
+    function AddSVGobject(object, pWidth, pHeight, pX, pY, pR, idx){
         const svgNS = "http://www.w3.org/2000/svg";
         const svg = document.createElementNS(svgNS, "svg");
         svg.setAttribute("width", pWidth);
@@ -309,7 +309,7 @@
     
         // Maska s průhledným kruhem
         const mask = document.createElementNS(svgNS, "mask");
-        mask.setAttribute("id", "hole-mask");
+        mask.setAttribute("id", "hole-mask" + idx);
     
         const maskRect = document.createElementNS(svgNS, "rect");
         maskRect.setAttribute("x", "0");
@@ -329,7 +329,7 @@
         svg.appendChild(mask);
     
         // Použití masky na čtverec
-        whiteRect.setAttribute("mask", "url(#hole-mask)");
+        whiteRect.setAttribute("mask", "url(#hole-mask" + idx + ")");
     
         // Přidání prvků do SVG
         svg.appendChild(whiteRect);
