@@ -3,6 +3,7 @@ body {
     color: white;
     padding: 20px; 
     height: 100vh;
+    overflow: hidden;
 
   background-image: url('./img/background.jpg'); /* cesta k tvému obrázku */
   background-size: cover;              /* roztáhne obrázek na celou obrazovku */
