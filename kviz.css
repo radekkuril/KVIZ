@@ -21,7 +21,8 @@ button{
 }
 #quiz-container { display: none; }
     .question-block {
-        display: block;
+        display: inline-block;
+        width:48%;
         margin-top: 20px;
         position: relative;
     }
