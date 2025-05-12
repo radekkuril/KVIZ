@@ -87,23 +87,6 @@
           input.addEventListener("dragover", handleDragOver);
           input.addEventListener("dragleave", handleDragLeave);
           input.addEventListener("drop", handleDrop);
-          /*
-          input.oninput = () => {
-            if (input.value.toLowerCase() === input.dataset.correct) {
-              input.style.backgroundColor = 'lightgreen';
-              if(input.imgBox){
-                input.imgBox.style.width="200px";
-                input.imgBox.style.height="200px";
-              }
-              input.disabled = true;
-              if (checkAllCorrect(container)) {
-               nextRound();
-               }
-            } else {
-              input.style.backgroundColor = '';
-            }
-          };
-          */
           div.appendChild(input);
           container.appendChild(div);
         });
@@ -193,16 +176,16 @@
                   result=result && (puzzle.nr == round.answer[i++]);
                 });
                 if(result && round.answer.length==puzzlePrvky.length){
-                    dropzone.style.backgroundColor = "lightgreen";
+                    dropzone.style.backgroundColor = clColor;
                     nextRound();
                 }
             }
         else{
           if (input.textContent.toLowerCase() === input.dataset.correct) {
-            input.style.backgroundColor = 'lightgreen';
+            input.style.backgroundColor = clColor;
             if(input.imgBox){
-              input.imgBox.style.width="200px";
-              input.imgBox.style.height="200px";
+              var obj = document.getElementById("svgId" + draggedObject.textContent.toLowerCase());
+              if(obj) obj.style.visibility = "hidden";
             }
             input.disabled = true;
             input.removeEventListener("drop",handleDrop);
@@ -266,14 +249,14 @@
                   result=result && (puzzle.nr == round.answer[i++]);
                 });
                 if(result && round.answer.length==puzzlePrvky.length){
-                    target.style.backgroundColor = "lightgreen";
+                    target.style.backgroundColor = clColor;
                     nextRound();
                 }
          }
          else{ 
               target.innerHTML = '';
               if (draggedObject.textContent.toLowerCase() === target.dataset.correct) {
-                target.style.backgroundColor = "lightgreen";
+                target.style.backgroundColor = clColor;
                 target.appendChild(draggedObject);
                 target.disabled = true;
                 var obj = document.getElementById("svgId" + draggedObject.textContent.toLowerCase());
